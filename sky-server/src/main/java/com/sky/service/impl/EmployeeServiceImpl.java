@@ -10,6 +10,7 @@ import com.sky.exception.PasswordErrorException;
 import com.sky.mapper.EmployeeMapper;
 import com.sky.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
@@ -18,7 +19,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     private EmployeeMapper employeeMapper;
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     /**
      * 员工登录
      *
@@ -37,10 +39,9 @@ public class EmployeeServiceImpl implements EmployeeService {
             //账号不存在
             throw new AccountNotFoundException(MessageConstant.ACCOUNT_NOT_FOUND);
         }
-
         //密码比对
-        // TODO 后期需要进行md5加密，然后再进行比对
-        if (!password.equals(employee.getPassword())) {
+        // TODO 后期需要进行bcrypt加密，然后再进行比对
+        if (!passwordEncoder.matches(password,employee.getPassword())) {
             //密码错误
             throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);
         }

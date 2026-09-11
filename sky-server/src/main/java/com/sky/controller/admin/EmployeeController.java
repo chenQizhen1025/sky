@@ -1,6 +1,7 @@
 package com.sky.controller.admin;
 
 import com.sky.constant.JwtClaimsConstant;
+import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.entity.Employee;
 import com.sky.properties.JwtProperties;
@@ -8,6 +9,8 @@ import com.sky.result.Result;
 import com.sky.service.EmployeeService;
 import com.sky.utils.JwtUtil;
 import com.sky.vo.EmployeeLoginVO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +27,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/admin/employee")
 @Slf4j
+@Api(tags = "员工相关接口")
 public class EmployeeController {
 
     @Autowired
@@ -31,13 +35,15 @@ public class EmployeeController {
     @Autowired
     private JwtProperties jwtProperties;
 
+
     /**
-     * 登录
-     *
-     * @param employeeLoginDTO
+     *      * 登录
+     *      *
+     *      * @param employeeLoginDTO
      * @return
      */
     @PostMapping("/login")
+    @ApiOperation("员工登录")
     public Result<EmployeeLoginVO> login(@RequestBody EmployeeLoginDTO employeeLoginDTO) {
         log.info("员工登录：{}", employeeLoginDTO);
 
@@ -61,12 +67,14 @@ public class EmployeeController {
         return Result.success(employeeLoginVO);
     }
 
+
     /**
      * 退出
      *
      * @return
      */
     @PostMapping("/logout")
+    @ApiOperation("员工退出")
     public Result<String> logout() {
         return Result.success();
     }
