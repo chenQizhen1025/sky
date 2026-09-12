@@ -1,5 +1,6 @@
 package com.sky.controller.admin;
 
+import com.aliyun.oss.model.ResizeUdfApplicationRequest;
 import com.sky.constant.JwtClaimsConstant;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
@@ -105,4 +106,16 @@ public class EmployeeController {
         return  Result.success(pageResult);
     }
 
+    /**
+     * 启动禁用员工账号
+     * @param status
+     * @param id
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("启动禁用员工账号")
+    public Result startOrStop(@PathVariable Integer status , Long id){
+        employeeService.startOrStop(status,id);
+        return Result.success();
+    }
 }
