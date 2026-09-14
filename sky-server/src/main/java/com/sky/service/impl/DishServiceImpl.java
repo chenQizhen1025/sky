@@ -16,11 +16,14 @@ import com.sky.result.PageResult;
 import com.sky.service.DishService;
 import com.sky.vo.DishVO;
 import lombok.extern.slf4j.Slf4j;
+import nonapi.io.github.classgraph.fileslice.ArraySlice;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -113,5 +116,33 @@ public class DishServiceImpl implements DishService {
         BeanUtils.copyProperties(dish, dishVO);
         dishVO.setFlavors(dishFlavors);
         return dishVO;
+    }
+
+    /**
+     * 修改菜品基本信息
+     * @param dishDTO
+     */
+    @Override
+    public void updateWithFlavor(DishDTO dishDTO) {
+        //更新菜品表基本信息
+        Dish dish = new Dish();
+        BeanUtils.copyProperties(dishDTO, dish);
+        dishMapper.update(dish);
+        //先删除所有关联口味，根据提交内容新增口味数据
+        ArrayList<Long> dishIds = new ArrayList<>();
+        Long id = dishDTO.getId();
+        dishIds.add(id);
+        dishFlavorMapper.deleteByDishIds(dishIds);
+
+        List<DishFlavor> dishFlavorList = dishDTO.getFlavors();
+
+        if (dishFlavorList != null && dishFlavorList.size() > 0) {
+            //给list中的id进行批量赋值
+            dishFlavorList.forEach(dishFlavor -> {
+                dishFlavor.setDishId(id);
+            });
+            //向口味表插入n条数据
+            dishFlavorMapper.insertBatch(dishFlavorList);
+        }
     }
 }
