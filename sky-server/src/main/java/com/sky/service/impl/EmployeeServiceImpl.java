@@ -83,13 +83,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setStatus(StatusConstant.ENABLE);
         //设置默认密码为123456,加密存储
         employee.setPassword(passwordEncoder.encode(PasswordConstant.DEFAULT_PASSWORD));
-        //设置创建时间和修改时间
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
-        //设置创建人和修改人
-        //后期修改为当前登录用户id，动态获取
-        employee.setCreateUser(BaseContext.getCurrentId());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+//        //设置创建时间和修改时间
+//        employee.setCreateTime(LocalDateTime.now());
+//        employee.setUpdateTime(LocalDateTime.now());
+//        //设置创建人和修改人
+//        //后期修改为当前登录用户id，动态获取
+//        employee.setCreateUser(BaseContext.getCurrentId());
+//        employee.setUpdateUser(BaseContext.getCurrentId());
         BaseContext.removeCurrentId();
         employeeMapper.insert(employee);
 
