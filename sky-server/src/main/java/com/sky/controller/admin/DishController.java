@@ -50,11 +50,25 @@ public class DishController {
         return Result.success(pageResult);
     }
 
+    /**
+     * 菜品批量删除
+     * @param ids
+     * @return
+     */
     @DeleteMapping
     @ApiOperation("菜品批量删除")
     public Result delete(@RequestParam List<Long> ids){
         log.info("菜品批量删除{}", ids);
         dishService.deleteBatch(ids);
         return Result.success();
+    }
+
+
+    @GetMapping("/{id}")
+    @ApiOperation("根据id查询菜品信息")
+    public Result<DishVO> getById(@PathVariable Long id){
+        log.info("根据id查询菜品信息{}", id);
+        DishVO dishVO = dishService.getByIdWithFlavor(id);
+        return Result.success(dishVO);
     }
 }
