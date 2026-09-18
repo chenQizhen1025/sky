@@ -37,15 +37,15 @@ public class UserController {
         //微信登录
         User user = userService.wxLogin(userLoginDTO);
         //获取jwt令牌给user对象
-    Map<String,Object> claims = new HashMap<>();
-    claims.put(JwtClaimsConstant.USER_ID, user.getId());
-        String token = JwtUtil.createJWT(jwtProperties.getUserSecretKey(), jwtProperties.getUserTtl(), claims);
+        Map<String,Object> claims = new HashMap<>();
+        claims.put(JwtClaimsConstant.USER_ID, user.getId());
+            String token = JwtUtil.createJWT(jwtProperties.getUserSecretKey(), jwtProperties.getUserTtl(), claims);
 
-        UserLoginVO userLoginVO = UserLoginVO.builder()
-                .id(user.getId())
-                .openid(user.getOpenid())
-                .token(token)
-                .build();
+            UserLoginVO userLoginVO = UserLoginVO.builder()
+                    .id(user.getId())
+                    .openid(user.getOpenid())
+                    .token(token)
+                    .build();
         return Result.success(userLoginVO);
     }
 }
