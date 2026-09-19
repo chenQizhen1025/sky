@@ -43,7 +43,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         if (list != null && list.size() > 0) {
             ShoppingCart cart = list.get(0);
             cart.setNumber(cart.getNumber() + 1);
-            shoppingCartMapper.updateById(cart);
+            shoppingCartMapper.updateNumberById(cart);
         }else{
             //若不存在，插入新数据
             //判断本次添加是菜品or套餐。判空逻辑
@@ -113,7 +113,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             }else {
                 //当前商品在购物车中的份数不为1，修改份数即可
                 shoppingCart.setNumber(shoppingCart.getNumber() - 1);
-                shoppingCartMapper.updateById(shoppingCart);
+                shoppingCartMapper.updateNumberById(shoppingCart);
             }
         }
     }
