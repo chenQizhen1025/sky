@@ -23,6 +23,6 @@ public interface ShoppingCartMapper {
     @Delete("delete from shopping_cart where user_id = #{userId}")
     void deleteByUserId(Long userId);
 
-    @Delete("delete from shopping_cart where id = #{id}")
-    void deleteById(Long id);
+    @Delete("delete from shopping_cart where user_id = #{userId}")
+    void deleteById(Long userId);
 }
